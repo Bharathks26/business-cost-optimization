@@ -194,10 +194,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👨‍💻 Author
 
-**[Your Name]**
+**Bharath K S **
 - MCA Final Year Project
-- [Your Email]
-- [Your LinkedIn]
+- ksbharath2612@gmail.com
+- linkedin.com/in/bharath-k-s-078a37322
 
 ## 🙏 Acknowledgments
 
@@ -210,7 +210,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 For support and questions:
 - Create an issue on GitHub
-- Email: [your-email@example.com]
+- Email:ksbharath2612@gmail.com
 
 ---
 
