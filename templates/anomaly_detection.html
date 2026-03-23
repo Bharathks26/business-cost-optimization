@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Anomaly Detection</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 40px; background-color: #f8f9fa; }
+        .container { max-width: 1400px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        h2 { color: #2c3e50; margin-bottom: 30px; font-weight: 600; }
+        table { width: 100%; border-collapse: collapse; margin: 25px 0; font-size: 14px; }
+        th, td { padding: 15px 12px; text-align: left; border-bottom: 1px solid #e9ecef; }
+        th { background-color: #f8f9fa; font-weight: 600; color: #495057; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px; }
+        .anomaly-row { background-color: #fff5f5; }
+        .anomaly-row:hover { background-color: #fef2f2; }
+        .amount { font-weight: 600; color: #e53e3e; }
+        .score-high { color: #c53030; font-weight: 600; }
+        .score-medium { color: #dd6b20; font-weight: 500; }
+        .score-low { color: #38a169; font-weight: 500; }
+        .summary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 25px; margin: 25px 0; border-radius: 10px; }
+        .summary h3 { margin: 0 0 10px 0; font-size: 18px; }
+        .summary p { margin: 5px 0; opacity: 0.95; }
+        .explanation { color: #6c757d; font-size: 13px; line-height: 1.4; max-width: 300px; }
+        .back-btn { display: inline-block; padding: 12px 24px; background: #667eea; color: white; text-decoration: none; border-radius: 6px; margin-top: 25px; font-weight: 500; transition: background 0.3s; }
+        .back-btn:hover { background: #5a67d8; text-decoration: none; color: white; }
+        .no-anomalies { text-align: center; padding: 60px 20px; color: #6c757d; }
+        .no-anomalies h3 { color: #38a169; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>🔍 Anomaly Detection Results</h2>
+        
+        <div class="summary">
+            <h3>Detection Summary</h3>
+            <p><strong>{{ anomalies|length }}</strong> anomalies detected from expense data analysis</p>
+            {% if anomalies %}
+                <p>Unusual spending patterns identified based on statistical analysis</p>
+            {% endif %}
+        </div>
+        
+        {% if anomalies %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Department</th>
+                        <th>Vendor</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                        <th>Anomaly Score</th>
+                        <th>Why Flagged?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for anomaly in anomalies %}
+                    <tr class="anomaly-row">
+                        <td>{{ anomaly.department }}</td>
+                        <td>{{ anomaly.vendor }}</td>
+                        <td class="amount">₹{{ "{:,.0f}".format(anomaly.amount) }}</td>
+                        <td>{{ anomaly.date }}</td>
+                        <td class="{% if anomaly.anomaly_score < -0.2 %}score-high{% elif anomaly.anomaly_score < -0.1 %}score-medium{% else %}score-low{% endif %}">
+                            {{ "%.3f"|format(anomaly.anomaly_score) }}
+                        </td>
+                        <td class="explanation">{{ anomaly.explanation or "Explanation not available" }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div class="no-anomalies">
+                <h3>✅ No Anomalies Detected</h3>
+                <p>All expense records appear to follow normal spending patterns.</p>
+                <p>Your financial data shows consistent, expected behavior.</p>
+            </div>
+        {% endif %}
+        
+        <div style="display: flex; gap: 15px; margin-top: 25px;">
+            <a href="/" class="back-btn">← Back to Dashboard</a>
+            <a href="{{ url_for('download_report') }}" class="back-btn" style="background: #28a745;">📊 Download Report</a>
+        </div>
+    </div>
+</body>
+</html>

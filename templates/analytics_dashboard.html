@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Analytics Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }
+        .dashboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .kpi-card { text-align: center; }
+        .kpi-value { font-size: 32px; font-weight: bold; color: #007bff; margin: 10px 0; }
+        .kpi-label { color: #666; font-size: 14px; }
+        .chart-container { position: relative; height: 400px; margin: 20px 0; }
+        .insight-box { background: #e8f4fd; border-left: 4px solid #007bff; padding: 15px; margin: 15px 0; }
+        .insight-title { font-weight: bold; color: #007bff; margin-bottom: 8px; }
+        .recommendation { background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin: 15px 0; }
+        .alert { background: #f8d7da; border-left: 4px solid #dc3545; padding: 15px; margin: 15px 0; }
+        table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .anomaly-row { background-color: #ffe6e6; }
+        .trend-up { color: #28a745; }
+        .trend-down { color: #dc3545; }
+        .metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
+        .metric-item { background: #f8f9fa; padding: 15px; border-radius: 5px; text-align: center; }
+    </style>
+</head>
+<body>
+    <h1>Business Analytics Dashboard</h1>
+    
+    <!-- Executive Summary -->
+    <div class="card">
+        <h3>Executive Summary</h3>
+        <div id="executiveSummary">
+            <div class="insight-box">
+                <div class="insight-title">Monthly Spending Trend</div>
+                <div id="trendInsight">Loading trend analysis...</div>
+            </div>
+            <div class="recommendation">
+                <div class="insight-title">Key Recommendation</div>
+                <div id="keyRecommendation">Analyzing data for recommendations...</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- KPI Cards -->
+    <div class="dashboard">
+        <div class="card kpi-card">
+            <div class="kpi-value" id="totalCost">₹0</div>
+            <div class="kpi-label">Total Cost</div>
+            <div id="totalCostTrend" class="kpi-label"></div>
+        </div>
+        <div class="card kpi-card">
+            <div class="kpi-value" id="avgMonthly">₹0</div>
+            <div class="kpi-label">Avg Monthly</div>
+            <div id="avgTrend" class="kpi-label"></div>
+        </div>
+        <div class="card kpi-card">
+            <div class="kpi-value" id="anomalyCount">0</div>
+            <div class="kpi-label">Anomalies</div>
+            <div id="riskLevel" class="kpi-label"></div>
+        </div>
+        <div class="card kpi-card">
+            <div class="kpi-value" id="departmentCount">0</div>
+            <div class="kpi-label">Departments</div>
+            <div id="diversityScore" class="kpi-label"></div>
+        </div>
+    </div>
+    
+    <!-- Decision Metrics -->
+    <div class="card">
+        <h3>Decision Metrics</h3>
+        <div class="metric-grid">
+            <div class="metric-item">
+                <div class="kpi-value" id="costPerDept">₹0</div>
+                <div class="kpi-label">Cost per Department</div>
+            </div>
+            <div class="metric-item">
+                <div class="kpi-value" id="topVendorShare">0%</div>
+                <div class="kpi-label">Top Vendor Share</div>
+            </div>
+            <div class="metric-item">
+                <div class="kpi-value" id="monthlyGrowth">0%</div>
+                <div class="kpi-label">Monthly Growth</div>
+            </div>
+            <div class="metric-item">
+                <div class="kpi-value" id="riskScore">Low</div>
+                <div class="kpi-label">Risk Score</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Charts -->
+    <div class="card">
+        <h3>Monthly Cost Trend & Forecast</h3>
+        <div class="chart-container">
+            <canvas id="monthlyChart"></canvas>
+        </div>
+        <div class="insight-box">
+            <div class="insight-title">Trend Analysis</div>
+            <div id="monthlyInsight">Analyzing monthly spending patterns...</div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <h3>Department Budget Analysis</h3>
+        <div class="chart-container">
+            <canvas id="departmentChart"></canvas>
+        </div>
+        <div class="insight-box">
+            <div class="insight-title">Department Insights</div>
+            <div id="deptInsight">Analyzing department spending...</div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <h3>Vendor Concentration Risk</h3>
+        <div class="chart-container">
+            <canvas id="vendorChart"></canvas>
+        </div>
+        <div class="insight-box">
+            <div class="insight-title">Vendor Risk Assessment</div>
+            <div id="vendorInsight">Analyzing vendor dependencies...</div>
+        </div>
+    </div>
+    
+    <!-- Explainable Insights -->
+    <div class="card">
+        <h3>🧠 Explainable Insights</h3>
+        <div class="insight-box">
+            <div class="insight-title">Why Anomalies Were Detected</div>
+            <div id="anomalyExplanation">{{ dashboard_data.insights.anomaly_summary or "Explanation not available" }}</div>
+        </div>
+        <div class="recommendation">
+            <div class="insight-title">Why Cost Optimization Actions Are Suggested</div>
+            <div id="recommendationExplanation">{{ dashboard_data.insights.recommendation_summary or "Explanation not available" }}</div>
+        </div>
+    </div>
+    
+    <!-- Critical Anomalies -->
+    <div class="card">
+        <h3>Critical Anomalies Requiring Action</h3>
+        <table id="anomaliesTable">
+            <thead>
+                <tr>
+                    <th>Priority</th>
+                    <th>Department</th>
+                    <th>Vendor</th>
+                    <th>Amount</th>
+                    <th>Date</th>
+                    <th>Risk Level</th>
+                    <th>Action Required</th>
+                </tr>
+            </thead>
+            <tbody id="anomaliesBody">
+                <tr><td colspan="7">No critical anomalies detected</td></tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <div style="display: flex; gap: 15px; margin: 20px 0;">
+        <a href="/">Back to Home</a>
+        <a href="{{ url_for('download_report') }}" style="color: #28a745; text-decoration: none; font-weight: bold;">📊 Download Report</a>
+    </div>
+    
+    <script id="dashboard-data" type="application/json">
+        {{ dashboard_data | tojson }}
+    </script>
+    
+    <script>
+        // Data from Flask with safe defaults
+        let parsedData;
+        try {
+            parsedData = JSON.parse(
+                document.getElementById("dashboard-data").textContent
+            );
+        } catch (e) {
+            parsedData = null;
+        }
+        
+        const dashboardData = parsedData || {
+            kpis: { totalCost: 0, avgMonthly: 0, anomalyCount: 0, departmentCount: 0 },
+            monthly: { labels: [], data: [] },
+            departments: { labels: [], data: [] },
+            anomalies: []
+        };
+        
+        // Calculate decision metrics
+        function calculateMetrics() {
+            const totalCost = dashboardData.kpis.totalCost;
+            const deptCount = dashboardData.kpis.departmentCount;
+            const anomalyCount = dashboardData.kpis.anomalyCount;
+            const monthlyData = dashboardData.monthly.data;
+            const deptData = dashboardData.departments.data;
+            
+            // Cost per department
+            const costPerDept = deptCount > 0 ? totalCost / deptCount : 0;
+            document.getElementById('costPerDept').textContent = '₹' + Math.round(costPerDept).toLocaleString();
+            
+            // Top vendor share
+            const topVendorShare = deptData.length > 0 ? Math.max(...deptData) / totalCost * 100 : 0;
+            document.getElementById('topVendorShare').textContent = Math.round(topVendorShare) + '%';
+            
+            // Monthly growth
+            let monthlyGrowth = 0;
+            if (monthlyData.length >= 2) {
+                const lastMonth = monthlyData[monthlyData.length - 1];
+                const prevMonth = monthlyData[monthlyData.length - 2];
+                monthlyGrowth = prevMonth > 0 ? ((lastMonth - prevMonth) / prevMonth) * 100 : 0;
+            }
+            document.getElementById('monthlyGrowth').textContent = monthlyGrowth.toFixed(1) + '%';
+            document.getElementById('monthlyGrowth').className = monthlyGrowth > 0 ? 'kpi-value trend-up' : 'kpi-value trend-down';
+            
+            // Risk score
+            let riskScore = 'Low';
+            if (anomalyCount > 5) riskScore = 'High';
+            else if (anomalyCount > 2) riskScore = 'Medium';
+            document.getElementById('riskScore').textContent = riskScore;
+            document.getElementById('riskScore').style.color = riskScore === 'High' ? '#dc3545' : riskScore === 'Medium' ? '#ffc107' : '#28a745';
+            
+            return { costPerDept, topVendorShare, monthlyGrowth, riskScore };
+        }
+        
+        // Generate insights
+        function generateInsights(metrics) {
+            // Trend insight
+            let trendText = 'Spending is stable';
+            if (metrics.monthlyGrowth > 10) trendText = 'Spending is increasing rapidly - review budget controls';
+            else if (metrics.monthlyGrowth > 5) trendText = 'Spending is growing - monitor closely';
+            else if (metrics.monthlyGrowth < -5) trendText = 'Spending is decreasing - good cost control';
+            document.getElementById('trendInsight').textContent = trendText;
+            
+            // Key recommendation
+            let recommendation = 'Continue current spending patterns';
+            if (metrics.topVendorShare > 40) recommendation = 'High vendor concentration risk - diversify suppliers';
+            else if (metrics.riskScore === 'High') recommendation = 'Multiple anomalies detected - conduct expense audit';
+            else if (metrics.monthlyGrowth > 15) recommendation = 'Implement immediate cost control measures';
+            document.getElementById('keyRecommendation').textContent = recommendation;
+            
+            // Department insight
+            const topDept = dashboardData.departments.labels[0] || 'N/A';
+            document.getElementById('deptInsight').textContent = `${topDept} has highest spending. Consider budget reallocation if exceeding targets.`;
+            
+            // Monthly insight
+            document.getElementById('monthlyInsight').textContent = `Monthly growth rate: ${metrics.monthlyGrowth.toFixed(1)}%. ${metrics.monthlyGrowth > 0 ? 'Monitor for budget overruns.' : 'Good cost management.'}`;
+            
+            // Vendor insight
+            document.getElementById('vendorInsight').textContent = `Top vendor represents ${metrics.topVendorShare.toFixed(1)}% of total spend. ${metrics.topVendorShare > 30 ? 'Consider supplier diversification.' : 'Good vendor distribution.'}`;
+        }
+        
+        // Update KPI cards with trends
+        document.getElementById('totalCost').textContent = '₹' + dashboardData.kpis.totalCost.toLocaleString();
+        document.getElementById('avgMonthly').textContent = '₹' + Math.round(dashboardData.kpis.avgMonthly).toLocaleString();
+        document.getElementById('anomalyCount').textContent = dashboardData.kpis.anomalyCount;
+        document.getElementById('departmentCount').textContent = dashboardData.kpis.departmentCount;
+        
+        // Calculate and display metrics
+        const metrics = calculateMetrics();
+        generateInsights(metrics);
+        
+        // Monthly Cost Trend Chart with forecast line
+        const monthlyCtx = document.getElementById('monthlyChart').getContext('2d');
+        new Chart(monthlyCtx, {
+            type: 'line',
+            data: {
+                labels: dashboardData.monthly.labels,
+                datasets: [{
+                    label: 'Actual Spending',
+                    data: dashboardData.monthly.data,
+                    borderColor: '#007bff',
+                    backgroundColor: 'rgba(0, 123, 255, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: true },
+                    title: { display: true, text: 'Monthly Spending Trend' }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return '₹' + value.toLocaleString();
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Department Budget Analysis Chart
+        const deptCtx = document.getElementById('departmentChart').getContext('2d');
+        new Chart(deptCtx, {
+            type: 'doughnut',
+            data: {
+                labels: dashboardData.departments.labels,
+                datasets: [{
+                    label: 'Department Spending',
+                    data: dashboardData.departments.data,
+                    backgroundColor: ['#007bff', '#28a745', '#ffc107', '#dc3545', '#6f42c1', '#fd7e14']
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'right' },
+                    title: { display: true, text: 'Department Budget Distribution' }
+                }
+            }
+        });
+        
+        // Vendor Concentration Chart
+        const vendorCtx = document.getElementById('vendorChart').getContext('2d');
+        // Use actual vendor spending data
+        const vendorData = dashboardData.vendors ? dashboardData.vendors.data : [];
+        const vendorLabels = dashboardData.vendors ? dashboardData.vendors.labels : [];
+        
+        new Chart(vendorCtx, {
+            type: 'bar',
+            data: {
+                labels: vendorLabels.length > 0 ? vendorLabels : ['No Data'],
+                datasets: [{
+                    label: 'Vendor Spending',
+                    data: vendorData.length > 0 ? vendorData : [0],
+                    backgroundColor: '#17a2b8'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: { display: true, text: 'Top 5 Vendor Spending' }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return '₹' + value.toLocaleString();
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Populate Critical Anomalies Table
+        const anomaliesBody = document.getElementById('anomaliesBody');
+        if (dashboardData.anomalies.length > 0) {
+            anomaliesBody.innerHTML = '';
+            dashboardData.anomalies.forEach((anomaly, index) => {
+                const row = anomaliesBody.insertRow();
+                row.className = 'anomaly-row';
+                const priority = anomaly.amount > 500000 ? 'HIGH' : anomaly.amount > 200000 ? 'MEDIUM' : 'LOW';
+                const riskLevel = anomaly.score > 0.8 ? 'Critical' : anomaly.score > 0.5 ? 'High' : 'Medium';
+                const action = priority === 'HIGH' ? 'Immediate Review' : priority === 'MEDIUM' ? 'Weekly Review' : 'Monitor';
+                
+                row.innerHTML = `
+                    <td><span style="color: ${priority === 'HIGH' ? '#dc3545' : priority === 'MEDIUM' ? '#ffc107' : '#28a745'}">${priority}</span></td>
+                    <td>${anomaly.department}</td>
+                    <td>${anomaly.vendor}</td>
+                    <td>₹${anomaly.amount.toLocaleString()}</td>
+                    <td>${anomaly.date}</td>
+                    <td>${riskLevel}</td>
+                    <td>${action}</td>
+                `;
+            });
+        }
+    </script>
+</body>
+</html>

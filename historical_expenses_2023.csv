@@ -1,0 +1,77 @@
+department,vendor,amount,date
+IT,Microsoft India,125000,1/15/2023
+HR,Office Depot India,45000.75,1/16/2023
+Finance,Tally Solutions,185000,1/17/2023
+Marketing,Google Ads India,250000.25,1/18/2023
+IT,Suspicious Vendor,2500000,1/19/2023
+Operations,Mahindra Logistics,175000,1/20/2023
+HR,NIIT Training,85000.5,1/21/2023
+Finance,KPMG India,450000,1/22/2023
+Marketing,Facebook India,125000.99,1/23/2023
+IT,Dell Technologies,158000.25,1/24/2023
+Sales,Salesforce India,225000,2/15/2023
+Operations,Blue Dart Express,35000,2/16/2023
+IT,Cisco Systems,195000,2/17/2023
+HR,TeamLease Services,65000,2/18/2023
+Marketing,Times Internet,180000,2/19/2023
+Finance,Ernst & Young,320000,2/20/2023
+IT,Oracle India,275000,3/1/2023
+Sales,HubSpot India,145000,3/2/2023
+Operations,DHL Express,42000,3/3/2023
+Marketing,LinkedIn India,165000,3/4/2023
+HR,Manpower India,78000,3/5/2023
+Finance,Fake Company Ltd,5000000,3/6/2023
+IT,IBM India,295000,4/7/2023
+Sales,Zoho Corporation,95000,4/8/2023
+Operations,FedEx India,38000,4/9/2023
+Marketing,Twitter India,135000,4/10/2023
+IT,HP Enterprise India,165000,4/11/2023
+HR,Adecco India,55000,4/12/2023
+Finance,PwC India,425000,5/13/2023
+Sales,Freshworks India,115000,5/14/2023
+IT,VMware India,185000,5/15/2023
+Operations,Gati Limited,45000,5/16/2023
+Marketing,Snapchat India,95000,5/17/2023
+HR,Kelly Services,68000,5/18/2023
+Finance,Grant Thornton,295000,6/19/2023
+IT,Adobe India,225000,6/20/2023
+Sales,Pipedrive India,85000,6/21/2023
+Operations,DTDC Express,32000,6/22/2023
+Marketing,Instagram India,155000,6/23/2023
+IT,SAP India,345000,7/24/2023
+HR,Randstad India,72000,7/25/2023
+Finance,BDO India,265000,7/26/2023
+Sales,Monday.com India,105000,7/27/2023
+IT,Lenovo India,145000,7/28/2023
+Operations,Ecom Express,28000,8/29/2023
+Marketing,YouTube India,195000,8/1/2023
+HR,Quess Corp,85000,8/2/2023
+Finance,RSM India,315000,8/3/2023
+IT,Red Hat India,265000,9/4/2023
+Sales,Slack India,125000,9/5/2023
+Operations,Aramex India,35000,9/6/2023
+Marketing,Pinterest India,115000,9/7/2023
+IT,Salesforce India,285000,9/8/2023
+HR,ABC Consultants,95000,10/9/2023
+Finance,Mazars India,245000,10/10/2023
+Sales,Asana India,95000,10/11/2023
+Operations,Professional Couriers,25000,10/12/2023
+Marketing,TikTok India,175000,10/13/2023
+IT,Infosys Limited,195000,11/14/2023
+HR,Ma Foi Strategic,65000,11/15/2023
+Finance,Baker Tilly India,285000,11/16/2023
+Sales,Trello India,75000,11/17/2023
+IT,Wipro Limited,225000,11/18/2023
+Operations,Speed Post India,18000,12/19/2023
+Marketing,Spotify India,145000,12/20/2023
+HR,Genius Consultants,58000,12/21/2023
+Finance,PKF India,195000,12/22/2023
+IT,TCS Limited,315000,12/23/2023
+Sales,Notion India,85000,12/24/2023
+Operations,India Post,15000,12/25/2023
+Marketing,Netflix India,225000,12/26/2023
+IT,HCL Technologies,245000,12/27/2023
+HR,Teamware Solutions,75000,12/28/2023
+Finance,Crowe India,265000,12/29/2023
+Sales,Airtable India,95000,12/30/2023
+IT,Tech Mahindra,185000,12/31/2023

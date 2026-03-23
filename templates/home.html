@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Business Cost Optimization Platform</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            background: #0a0e27;
+            color: #fff;
+            overflow-x: hidden;
+        }
+        
+        .navbar {
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.2rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(99, 102, 241, 0.2);
+        }
+        
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .nav-links { display: flex; gap: 2rem; align-items: center; }
+        .nav-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+        .nav-links a:hover { color: #6366f1; }
+        
+        .hero-section {
+            padding: 6rem 2rem;
+            text-align: center;
+            background: linear-gradient(135deg, #0a0e27 0%, #1e1b4b 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.15), transparent);
+            top: -250px;
+            right: -250px;
+            border-radius: 50%;
+        }
+        
+        .hero-content { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; }
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #fff, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+        }
+        
+        .hero-content p {
+            font-size: 1.3rem;
+            color: #94a3b8;
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+        }
+        
+        .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+        .btn {
+            padding: 1rem 2.5rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            color: white;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.4);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, #fff, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .module-card {
+            background: linear-gradient(135deg, rgba(30, 27, 75, 0.6), rgba(15, 23, 42, 0.6));
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-decoration: none;
+            color: white;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .module-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(168, 85, 247, 0.1));
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+        
+        .module-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(99, 102, 241, 0.5);
+            box-shadow: 0 20px 60px rgba(99, 102, 241, 0.3);
+        }
+        
+        .module-card:hover::before { opacity: 1; }
+        
+        .module-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            display: block;
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .module-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .module-card p {
+            color: #94a3b8;
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .admin-panel {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.1));
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-top: 3rem;
+        }
+        
+        .admin-panel h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: #fca5a5;
+        }
+        
+        .admin-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .admin-btn {
+            background: rgba(239, 68, 68, 0.2);
+            color: #fca5a5;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            padding: 0.9rem 2rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+        
+        .admin-btn:hover {
+            background: rgba(239, 68, 68, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .logout-section {
+            text-align: center;
+            margin-top: 3rem;
+        }
+        
+        .footer {
+            background: rgba(10, 14, 39, 0.95);
+            border-top: 1px solid rgba(99, 102, 241, 0.2);
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-top: 4rem;
+        }
+        
+        .footer h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .footer p { color: #64748b; margin: 0.5rem 0; }
+        .footer a { color: #94a3b8; text-decoration: none; transition: color 0.3s; }
+        .footer a:hover { color: #6366f1; }
+        
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 2.5rem; }
+            .hero-content p { font-size: 1.1rem; }
+            .modules-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo"><i class="fas fa-chart-line"></i> CostOptimize</div>
+            {% if session.user_id %}
+            <div class="nav-links">
+                <span style="color: #6366f1;">{{ session.username }}</span>
+                <a href="/logout">Logout</a>
+            </div>
+            {% endif %}
+        </div>
+    </nav>
+    
+    {% if session.user_id %}
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1>Welcome Back, {{ session.username }}! 👋</h1>
+            <p>Your intelligent business cost optimization dashboard powered by advanced analytics and machine learning</p>
+        </div>
+    </section>
+    
+    <div class="container">
+        <h2 class="section-title">Analytics Modules</h2>
+        
+        <div class="modules-grid">
+            <a href="/upload-expenses" class="module-card">
+                <i class="fas fa-cloud-upload-alt module-icon"></i>
+                <h3>Upload Expenses</h3>
+                <p>Import and manage expense data from CSV files with intelligent validation</p>
+            </a>
+            
+            <a href="/dashboard" class="module-card">
+                <i class="fas fa-th-large module-icon"></i>
+                <h3>Dashboard</h3>
+                <p>Comprehensive overview of all expense data with real-time insights</p>
+            </a>
+            
+            <a href="/analytics-dashboard" class="module-card">
+                <i class="fas fa-chart-bar module-icon"></i>
+                <h3>Analytics Dashboard</h3>
+                <p>Interactive visualizations and data-driven insights for decision making</p>
+            </a>
+            
+            <a href="/kpi-analysis" class="module-card">
+                <i class="fas fa-bullseye module-icon"></i>
+                <h3>KPI Analysis</h3>
+                <p>Track and monitor key performance indicators across departments</p>
+            </a>
+            
+            <a href="/anomaly-detection" class="module-card">
+                <i class="fas fa-exclamation-circle module-icon"></i>
+                <h3>Anomaly Detection</h3>
+                <p>AI-powered detection of unusual spending patterns and outliers</p>
+            </a>
+            
+            <a href="/forecasting" class="module-card">
+                <i class="fas fa-chart-line module-icon"></i>
+                <h3>Forecasting</h3>
+                <p>Predict future expenses using machine learning algorithms</p>
+            </a>
+            
+            <a href="/download-report" class="module-card">
+                <i class="fas fa-file-excel module-icon"></i>
+                <h3>Download Report</h3>
+                <p>Generate comprehensive Excel reports with all analytics data</p>
+            </a>
+            
+            <a href="/recommendations" class="module-card">
+                <i class="fas fa-lightbulb module-icon"></i>
+                <h3>Recommendations</h3>
+                <p>AI-powered cost optimization suggestions and actionable insights</p>
+            </a>
+        </div>
+        
+        {% if session.role == "admin" %}
+        <div class="admin-panel">
+            <h3><i class="fas fa-shield-alt"></i> Admin Control Panel</h3>
+            <div class="admin-actions">
+                <a href="/admin-dashboard" class="admin-btn">Admin Dashboard</a>
+                <button onclick="deleteData()" class="admin-btn">Delete Data</button>
+                <button onclick="resetDatabase()" class="admin-btn">Reset Database</button>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    {% else %}
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1>Business Cost Optimization Platform</h1>
+            <p>Transform your business expenses into actionable insights with AI-powered analytics and machine learning</p>
+            <div class="cta-buttons">
+                <a href="/login" class="btn btn-primary">Login</a>
+                <a href="/register" class="btn btn-secondary">Register</a>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+    
+    <footer class="footer">
+        <h4>Business Cost Optimization Platform</h4>
+        <p>Data-Driven Analytics for Smart Business Decisions</p>
+        <p style="margin-top: 1rem;">
+            <a href="/about">About Us</a> | 
+            <a href="/contact">Contact Us</a>
+        </p>
+    </footer>
+    
+    <script>
+        function deleteData() {
+            if (confirm('Are you sure you want to delete all data?')) {
+                fetch('/delete-data', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => alert(data.message));
+            }
+        }
+        
+        function resetDatabase() {
+            if (confirm('Are you sure you want to reset the database?')) {
+                fetch('/reset-database', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => alert(data.message));
+            }
+        }
+    </script>
+</body>
+</html>

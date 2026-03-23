@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>KPI Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }
+        .dashboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .card h3 { margin-top: 0; color: #333; border-bottom: 2px solid #007bff; padding-bottom: 10px; }
+        .kpi-value { font-size: 24px; font-weight: bold; color: #007bff; margin: 10px 0; }
+        .kpi-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #eee; }
+        .kpi-item:last-child { border-bottom: none; }
+    </style>
+</head>
+<body>
+    <h1>KPI Dashboard</h1>
+    
+    {% if kpis %}
+        <div class="dashboard">
+            <div class="card">
+                <h3>Monthly Cost</h3>
+                {% for month, cost in kpis.monthly_cost.items() %}
+                    <div class="kpi-item">
+                        <span>{{ month }}</span>
+                        <span class="kpi-value">₹{{ "%.0f"|format(cost) }}</span>
+                    </div>
+                {% endfor %}
+            </div>
+            
+            <div class="card">
+                <h3>Department Cost</h3>
+                {% for dept, cost in kpis.department_cost.items() %}
+                    <div class="kpi-item">
+                        <span>{{ dept }}</span>
+                        <span class="kpi-value">₹{{ cost | round(0) }}</span>
+                    </div>
+                {% endfor %}
+            </div>
+            
+            <div class="card">
+                <h3>Growth Rate</h3>
+                {% for month, rate in kpis.cost_growth_rate.items() %}
+                    <div class="kpi-item">
+                        <span>{{ month }}</span>
+                        <span class="kpi-value">{{ (rate * 100) | round(1) }}%</span>
+                    </div>
+                {% endfor %}
+            </div>
+            
+            <div class="card">
+                <h3>Budget Variance</h3>
+                {% if kpis.budget_variance %}
+                    {% for dept, variance in kpis.budget_variance.items() %}
+                        <div class="kpi-item">
+                            <span>{{ dept }}</span>
+                            <span class="kpi-value">{{ (variance * 100) | round(1) }}%</span>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="kpi-item">
+                        <span>No budget data available</span>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    {% else %}
+        <div class="card">
+            <p>No expense data available for KPI analysis.</p>
+        </div>
+    {% endif %}
+    
+    <p style="margin-top: 30px;"><a href="/">Back to Home</a></p>
+</body>
+</html>

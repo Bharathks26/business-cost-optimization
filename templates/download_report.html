@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Download Report</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Segoe UI',sans-serif;background:linear-gradient(135deg,#667eea,#764ba2);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+        .card{background:white;padding:40px;border-radius:15px;box-shadow:0 15px 35px rgba(0,0,0,.2);width:100%;max-width:600px;text-align:center}
+        h2{color:#333;margin-bottom:15px;font-size:26px}
+        p{color:#666;margin-bottom:25px;font-size:15px;line-height:1.6}
+        select{width:100%;padding:12px;border:2px solid #ddd;border-radius:8px;font-size:15px;margin-bottom:20px;cursor:pointer}
+        select:focus{outline:none;border-color:#667eea}
+        .btn{background:linear-gradient(135deg,#667eea,#764ba2);color:white;padding:14px;border:none;border-radius:8px;font-size:17px;font-weight:600;cursor:pointer;width:100%;transition:.2s}
+        .btn:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(102,126,234,.4)}
+        .back{margin-top:18px}
+        .back a{color:#667eea;text-decoration:none;font-weight:600}
+        .alert{padding:10px;margin-bottom:15px;border-radius:5px;font-size:14px}
+        .alert-error{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+        .alert-success{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+        /* Modal */
+        .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:999;align-items:center;justify-content:center}
+        .overlay.active{display:flex}
+        .modal{background:white;border-radius:15px;padding:35px;max-width:400px;width:90%;text-align:center;animation:pop .3s ease}
+        @keyframes pop{from{transform:scale(.8);opacity:0}to{transform:scale(1);opacity:1}}
+        .modal-icon{font-size:3rem;margin-bottom:12px}
+        .modal h3{color:#333;margin-bottom:8px}
+        .modal p{color:#666;font-size:.9rem;margin-bottom:22px}
+        .modal-btns{display:flex;gap:10px;justify-content:center}
+        .m-cancel{background:#f1f5f9;color:#555;border:none;padding:11px 28px;border-radius:8px;font-weight:600;cursor:pointer}
+        .m-confirm{background:linear-gradient(135deg,#667eea,#764ba2);color:white;border:none;padding:11px 28px;border-radius:8px;font-weight:600;cursor:pointer}
+        .m-confirm:hover{box-shadow:0 5px 15px rgba(102,126,234,.4)}
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>📥 Download Business Report</h2>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endwith %}
+
+        <form id="reportForm" method="POST" action="{{ url_for('download_report_file') }}">
+            {% if is_admin %}
+                <p>Select a user to download their report, or choose All Users.</p>
+                <select name="user_id">
+                    <option value="">All Users</option>
+                    {% for user in users %}
+                        <option value="{{ user.id }}">{{ user.username }} - {{ user.company_name or 'N/A' }}</option>
+                    {% endfor %}
+                </select>
+            {% else %}
+                <p>Generate and download a comprehensive Excel report with your expense analysis, KPIs, anomalies, and forecasts.</p>
+            {% endif %}
+            <button type="button" class="btn" onclick="document.getElementById('overlay').classList.add('active')">⬇ Download Report</button>
+        </form>
+
+        <div class="back"><a href="/">← Back to Home</a></div>
+    </div>
+
+    <div class="overlay" id="overlay" onclick="if(event.target===this)this.classList.remove('active')">
+        <div class="modal">
+            <div class="modal-icon">📊</div>
+            <h3>Confirm Download</h3>
+            <p>Your business expense report will be generated and downloaded as an Excel file. Do you want to proceed?</p>
+            <div class="modal-btns">
+                <button class="m-cancel" onclick="document.getElementById('overlay').classList.remove('active')">Cancel</button>
+                <button class="m-confirm" onclick="document.getElementById('overlay').classList.remove('active');document.getElementById('reportForm').submit()">Yes, Download</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

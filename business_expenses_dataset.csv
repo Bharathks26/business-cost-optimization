@@ -1,0 +1,117 @@
+department,vendor,amount,date
+IT,Microsoft India,125000,1/15/2024
+HR,Office Depot India,45000.75,1/16/2024
+Finance,Tally Solutions,185000,1/17/2024
+Marketing,Google Ads India,250000.25,1/18/2024
+IT,Amazon Web Services,95000,1/19/2024
+Operations,Mahindra Logistics,175000,1/20/2024
+HR,NIIT Training,85000.5,1/21/2024
+Finance,KPMG India,450000,1/22/2024
+Marketing,Facebook India,125000.99,1/23/2024
+IT,Dell Technologies,158000.25,1/24/2024
+Sales,Salesforce India,225000,1/25/2024
+Operations,Blue Dart Express,35000,1/26/2024
+IT,Cisco Systems,195000,1/27/2024
+HR,TeamLease Services,65000,1/28/2024
+Marketing,Times Internet,180000,1/29/2024
+Finance,Ernst & Young,320000,1/30/2024
+IT,Oracle India,275000,2/1/2024
+Sales,HubSpot India,145000,2/2/2024
+Operations,DHL Express,42000,2/3/2024
+Marketing,LinkedIn India,165000,2/4/2024
+HR,Manpower India,78000,2/5/2024
+Finance,Deloitte India,385000,2/6/2024
+IT,IBM India,295000,2/7/2024
+Sales,Zoho Corporation,95000,2/8/2024
+Operations,FedEx India,38000,2/9/2024
+Marketing,Twitter India,135000,2/10/2024
+IT,HP Enterprise India,165000,2/11/2024
+HR,Adecco India,55000,2/12/2024
+Finance,PwC India,425000,2/13/2024
+Sales,Freshworks India,115000,2/14/2024
+IT,VMware India,185000,2/15/2024
+Operations,Gati Limited,45000,2/16/2024
+Marketing,Snapchat India,95000,2/17/2024
+HR,Kelly Services,68000,2/18/2024
+Finance,Grant Thornton,295000,2/19/2024
+IT,Adobe India,225000,2/20/2024
+Sales,Pipedrive India,85000,2/21/2024
+Operations,DTDC Express,32000,2/22/2024
+Marketing,Instagram India,155000,2/23/2024
+IT,SAP India,345000,2/24/2024
+HR,Randstad India,72000,2/25/2024
+Finance,BDO India,265000,2/26/2024
+Sales,Monday.com India,105000,2/27/2024
+IT,Lenovo India,145000,2/28/2024
+Operations,Ecom Express,28000,2/29/2024
+Marketing,YouTube India,195000,3/1/2024
+HR,Quess Corp,85000,3/2/2024
+Finance,RSM India,315000,3/3/2024
+IT,Red Hat India,265000,3/4/2024
+Sales,Slack India,125000,3/5/2024
+Operations,Aramex India,35000,3/6/2024
+Marketing,Pinterest India,115000,3/7/2024
+IT,Salesforce India,285000,3/8/2024
+HR,ABC Consultants,95000,3/9/2024
+Finance,Mazars India,245000,3/10/2024
+Sales,Asana India,95000,3/11/2024
+Operations,Professional Couriers,25000,3/12/2024
+Marketing,TikTok India,175000,3/13/2024
+IT,Infosys Limited,195000,3/14/2024
+HR,Ma Foi Strategic,65000,3/15/2024
+Finance,Baker Tilly India,285000,3/16/2024
+Sales,Trello India,75000,3/17/2024
+IT,Wipro Limited,225000,3/18/2024
+Operations,Speed Post India,18000,3/19/2024
+Marketing,Spotify India,145000,3/20/2024
+HR,Genius Consultants,58000,3/21/2024
+Finance,PKF India,195000,3/22/2024
+IT,TCS Limited,315000,3/23/2024
+Sales,Notion India,85000,3/24/2024
+Operations,India Post,15000,3/25/2024
+Marketing,Netflix India,225000,3/26/2024
+IT,HCL Technologies,245000,3/27/2024
+HR,Teamware Solutions,75000,3/28/2024
+Finance,Crowe India,265000,3/29/2024
+Sales,Airtable India,95000,3/30/2024
+IT,Tech Mahindra,185000,3/31/2024
+Operations,Rivigo Services,45000,4/1/2024
+Marketing,Amazon Prime Video,195000,4/2/2024
+HR,Antal International,68000,4/3/2024
+Finance,UHY India,225000,4/4/2024
+IT,Mindtree Limited,165000,4/5/2024
+Sales,ClickUp India,105000,4/6/2024
+Operations,Shadowfax Technologies,38000,4/7/2024
+Marketing,Disney+ Hotstar,185000,4/8/2024
+IT,Capgemini India,275000,4/9/2024
+HR,Michael Page India,85000,4/10/2024
+Finance,BKR India,195000,4/11/2024
+Sales,Basecamp India,75000,4/12/2024
+IT,Accenture India,295000,4/13/2024
+Operations,Delhivery Limited,42000,4/14/2024
+Marketing,Voot Select,125000,4/15/2024
+HR,Hays India,78000,4/16/2024
+Finance,Moore India,245000,4/17/2024
+IT,Cognizant India,225000,4/18/2024
+Sales,Wrike India,115000,4/19/2024
+Operations,Ekart Logistics,35000,4/20/2024
+Marketing,SonyLIV India,165000,4/21/2024
+IT,L&T Infotech,185000,4/22/2024
+HR,Hudson India,65000,4/23/2024
+Finance,Nexia India,215000,4/24/2024
+Sales,Smartsheet India,95000,4/25/2024
+IT,Mphasis Limited,205000,4/26/2024
+Operations,Xpressbees,32000,4/27/2024
+Marketing,Zee5 Premium,145000,4/28/2024
+HR,Robert Half India,72000,4/29/2024
+Finance,JPA India,185000,4/30/2024
+IT,Persistent Systems,165000,5/1/2024
+Sales,Todoist India,65000,5/2/2024
+Operations,Shiprocket,28000,5/3/2024
+Marketing,MX Player Pro,115000,5/4/2024
+IT,Hexaware Technologies,195000,5/5/2024
+HR,PageGroup India,68000,5/6/2024
+Finance,Singhi & Co,225000,5/7/2024
+Sales,Calendly India,85000,5/8/2024
+IT,NIIT Technologies,175000,5/9/2024
+Operations,Gojavas,25000,5/10/2024

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Expense Forecasting</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .forecast-section { margin: 30px 0; padding: 20px; border: 1px solid #ddd; border-radius: 5px; }
+        .forecast-title { color: #333; margin-bottom: 15px; }
+        table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .historical { background-color: #f9f9f9; }
+        .forecasted { background-color: #e3f2fd; }
+    </style>
+</head>
+<body>
+    <h2>Expense Forecasting</h2>
+    
+    {% if forecast.historical.months %}
+        <div class="forecast-section">
+            <h3 class="forecast-title">Historical Monthly Expenses</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Month</th>
+                        <th>Total Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in range(forecast.historical.months|length) %}
+                    <tr class="historical">
+                        <td>{{ forecast.historical.months[i] }}</td>
+                        <td>₹{{ "{:,.0f}".format(forecast.historical.amounts[i]) }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="forecast-section">
+            <h3 class="forecast-title">Forecasted Monthly Expenses</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Month</th>
+                        <th>Predicted Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in range(forecast.forecasted.months|length) %}
+                    <tr class="forecasted">
+                        <td>{{ forecast.forecasted.months[i] }}</td>
+                        <td>₹{{ "{:,.0f}".format(forecast.forecasted.amounts[i]) }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="forecast-section">
+            <p>No expense data available for forecasting.</p>
+        </div>
+    {% endif %}
+    
+    <p><a href="/">Back to Home</a></p>
+</body>
+</html>
